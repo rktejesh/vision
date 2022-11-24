@@ -1,5 +1,4 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException
-from PIL import Image
 import uvicorn
 from os import getcwd, remove
 from fastapi.responses import FileResponse, JSONResponse
@@ -38,4 +37,4 @@ def delete_file(name_file: str):
         }, status_code=404)
 
 if __name__ == '__main__':
-	uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+	uvicorn.run(app)
