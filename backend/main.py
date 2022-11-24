@@ -37,5 +37,5 @@ def delete_file(name_file: str):
             "error_message": "File not found"
         }, status_code=404)
 
-# if __name__ == '__main__':
-# 	uvicorn.run(app)
+if __name__ == '__main__':
+	uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
