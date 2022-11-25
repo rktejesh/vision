@@ -20,7 +20,7 @@ async def upload_file(file: UploadFile = File(...)):
         image.close()
     return FileResponse(
         path=getcwd() + "/" + file.filename,
-        media_type= mimetypes.guess_type(image)[0]
+        #media_type= mimetypes.guess_type(image)[0]
         )
 
 @app.get("/file/{name_file}")
