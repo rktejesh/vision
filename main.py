@@ -2,6 +2,7 @@ from fastapi import FastAPI, File, UploadFile, HTTPException
 import uvicorn
 from os import getcwd, remove
 from fastapi.responses import FileResponse, JSONResponse
+import mimetypes
 
 # define the fastAPI
 app = FastAPI()
@@ -17,7 +18,10 @@ async def upload_file(file: UploadFile = File(...)):
         content = await file.read()
         image.write(content)
         image.close()
-    return FileResponse(path=getcwd() + "/" + file.filename)
+    return FileResponse(
+        path=getcwd() + "/" + file.filename,
+        media_type= mimetypes.guess_type(image)[0]
+        )
 
 @app.get("/file/{name_file}")
 def get_file(name_file: str):
