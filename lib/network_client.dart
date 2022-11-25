@@ -1,10 +1,12 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
 //for hosting on another device change this to the ip of the device
-const String baseUrl = "";
+const String baseUrl = "https://vision-rktejesh.herokuapp.com";
 
 var dio = Dio();
 
@@ -40,10 +42,17 @@ put(String url) async {
   }
 }
 
-post(FormData formData, String urlPath) async {
+post(FormData formData) async {
   dio.options.baseUrl = baseUrl;
   try {
-    var response = await dio.post(urlPath, data: formData);
+    Response response = await dio
+        .post('https://vision-rktejesh.herokuapp.com/upload', data: formData,
+            onSendProgress: (int sent, int total) {
+      print('$sent $total');
+    }, options: Options(responseType: ResponseType.bytes));
+    /*final decodedBytes = base64Decode(response.data);
+    var file = File("image.png");
+    file.writeAsBytesSync(decodedBytes);*/
     return response;
   } on http.ClientException catch (e) {
     print("Server most likely not online, failed post (ClientException)");
